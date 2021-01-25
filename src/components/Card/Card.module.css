@@ -1,0 +1,32 @@
+.Card {
+  position: relative;
+}
+
+.Card img {
+  margin: 20px;
+  cursor: pointer;
+  width: 130px;
+  height: 200px;
+  border: 1px solid #fff;
+  border-radius: 4px;
+}
+
+.Overlay {
+  position: absolute;
+  margin: 20px;
+  width: 130px;
+  height: 200px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  opacity: 1;
+  background-color: #008CBA;
+}
+
+.clicked {
+  opacity: 0;
+  transition: 0.5s;
+}
