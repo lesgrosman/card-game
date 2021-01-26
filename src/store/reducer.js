@@ -4,7 +4,9 @@ const initialState = {
   cards: shuffleImages(images),
   firstCard: null,
   correctAnswersCounter: 0,
-  refreshGame: false
+  hideAll: false,
+  isOver: false,
+  gameStatus: 'start'
 }
 
 const reducer = (state=initialState, action) => {
@@ -15,7 +17,9 @@ const reducer = (state=initialState, action) => {
         cards: action.newCards,
         firstCard: null,
         correctAnswersCounter: 0,
-        refreshGame: !state.refreshGame
+        hideAll: false,
+        gameStatus: action.gameStatus,
+        isOver: true
       }
     case 'SET_FIRST_CARD':
       return {
@@ -30,6 +34,17 @@ const reducer = (state=initialState, action) => {
       return {
         ...state,
         correctAnswersCounter: 0
+      }
+    case 'HIDE_ALL':
+      return {
+        ...state,
+        hideAll: true
+      }
+    case 'SET_NEW_GAME':
+      return {
+        ...state,
+        isOver: false,
+        hideAll: false
       }
     default:
       return state

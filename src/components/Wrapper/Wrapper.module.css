@@ -1,4 +1,4 @@
-/* .Container {
+.Wrapper {
   max-width: 1000px;
   position: absolute;
   top: 0;
@@ -12,11 +12,4 @@
   min-height: 100%;
   box-shadow: 1px 6px 5px 6px #ccc;
   padding-bottom: 30px;
-} */
-
-.MainPage {
-  display : flex;
-  flex-wrap: wrap;
-  padding-left: 100px;
-  padding-right: 100px;
 }

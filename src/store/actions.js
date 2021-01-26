@@ -8,26 +8,30 @@ const clickProcessing = (id) => {
     if (state.firstCard === null) {
       dispatch(setFirstCard(id))
     } else {
-      if (state.firstCard === id && (state.correctAnswersCounter === (state.cards.length / 2) - 1)) {
-        console.log('VICTORY')
-        dispatch(setCards())
+      if (state.firstCard === id && (state.correctAnswersCounter === (images.length / 2) - 1)) {
+        dispatch(setCards('victory'))
       } else if (state.firstCard === id) {
         dispatch(setFirstCard(null))
         dispatch(setCounter())
-        console.log('Correct. Continue')
       } else {
-        dispatch(setCards())
-        console.log('INCORRECT. Rerender')
+        dispatch(setCards('lose'))
       }
     }
   }
 }
 
-const setCards = () => {
+const hideAll = () => {
+  return {
+    type: 'HIDE_ALL'
+  }
+}
+
+const setCards = (gameStatus) => {
   const newCards = shuffleImages(images)
   return {
     type: 'SET_CARDS',
-    newCards
+    newCards,
+    gameStatus
   }
 }
 
@@ -50,10 +54,18 @@ const setCounterToZero = () => {
   }
 }
 
+const setNewGame = () => {
+  return {
+    type: 'SET_NEW_GAME'
+  }
+}
+
 export {
   setCards,
   setFirstCard,
   setCounter,
   setCounterToZero,
-  clickProcessing
+  clickProcessing,
+  hideAll,
+  setNewGame
 }

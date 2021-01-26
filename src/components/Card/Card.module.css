@@ -4,11 +4,11 @@
 
 .Card img {
   margin: 20px;
-  cursor: pointer;
   width: 130px;
   height: 200px;
   border: 1px solid #fff;
   border-radius: 4px;
+  pointer-events: none;
 }
 
 .Overlay {
@@ -24,9 +24,19 @@
   border-radius: 4px;
   opacity: 1;
   background-color: #008CBA;
+  opacity: 0;
+  cursor: pointer;
+  pointer-events: none;
 }
 
 .clicked {
   opacity: 0;
   transition: 0.5s;
+  pointer-events: none;
+}
+
+.hide {
+  opacity: 1;
+  transition: 0.3s;
+  pointer-events: auto;
 }

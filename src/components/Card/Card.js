@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import classes from './Card.module.css'
 
 const Card = ({url, id, clickImage}) => {
 
   const [clicked, setClicked] = useState(false)
+  const hideAll = useSelector(state => state.hideAll)
 
   const onClickHandler = () => {
     setClicked(true)
@@ -13,7 +15,12 @@ const Card = ({url, id, clickImage}) => {
   const cls = [classes.Overlay]
 
   if (clicked) {
+    cls.pop()
     cls.push(classes.clicked)
+  }
+
+  if (hideAll) {
+    cls.push(classes.hide)
   }
 
   return (

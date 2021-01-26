@@ -1,15 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import Card from '../Card/Card'
-import { clickProcessing } from '../../store/actions'
+import { clickProcessing, hideAll } from '../../store/actions'
 import classes from './MainPage.module.css'
 
 const MainPage = () => {
 
   const cards = useSelector(state => state.cards)
-  const refreshGame = useSelector(state => state.refreshGame)
-
+  const isOver = useSelector(state => state.isOver)
+  
+  const history = useHistory()
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (isOver) {
+      history.push('/')
+    }
+  })
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(hideAll())
+    }, 5000)
+  }, [])
 
   const onClickHandler = (id) => {
     setTimeout(() => {
@@ -17,22 +31,22 @@ const MainPage = () => {
     }, 1000)
   }
 
+
+
   return (
-    <div className={classes.Container}>
-      <div className={classes.MainPage}>
-        {
-          cards.map((card, i) => {
-              return (
-                <Card 
-                  key={Date.now() + i} 
-                  url={card.src} 
-                  id={card.id}
-                  clickImage={onClickHandler}
-                />
-              )
-          })          
-        }
-      </div>
+    <div className={classes.MainPage}>
+      {
+        cards.map((card, i) => {
+            return (
+              <Card 
+                key={Date.now() + i} 
+                url={card.src} 
+                id={card.id}
+                clickImage={onClickHandler}
+              />
+            )
+        })          
+      }
     </div>
   )
 }

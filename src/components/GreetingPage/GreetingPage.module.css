@@ -1,0 +1,12 @@
+.GreetingPage {
+  display: flex;
+  flex-direction: column;
+}
+
+.GreetingPage a{
+  margin: auto;
+  font-size: 30px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+}
