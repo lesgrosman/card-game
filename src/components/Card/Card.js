@@ -1,27 +1,42 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { disableAllCards, clickProcessing } from '../../store/actions'
 import classes from './Card.module.css'
 
-const Card = ({url, id, clickImage}) => {
+const Card = ({ url, id, hideAll }) => {
 
   const [clicked, setClicked] = useState(false)
-  const hideAll = useSelector(state => state.hideAll)
+  const correctCards = useSelector(state => state.correctCards)
+  const cardsAreDisable = useSelector(state => state.cardsAreDisable)
+
+  const dispatch = useDispatch()
+
 
   const onClickHandler = () => {
     setClicked(true)
-    clickImage(id)
+
+    dispatch(disableAllCards())
+
+    setTimeout(() => {
+      dispatch(disableAllCards())
+      dispatch(clickProcessing(id))
+    }, 1000)   
   }
 
   const cls = [classes.Overlay]
 
-  if (clicked) {
+  if (hideAll) {
+    cls.push(classes.hide)
+  }
+
+  if (correctCards.includes(id) || clicked) {
     cls.pop()
     cls.push(classes.clicked)
   }
 
-  if (hideAll) {
-    cls.push(classes.hide)
-  }
+  if (cardsAreDisable) {
+    cls.push(classes.disabled)
+  } 
 
   return (
     <div className={classes.Card}>

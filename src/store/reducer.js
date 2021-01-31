@@ -3,37 +3,32 @@ import {shuffleImages, images} from '../images'
 const initialState = {
   cards: shuffleImages(images),
   firstCard: null,
-  correctAnswersCounter: 0,
   hideAll: false,
   isOver: false,
-  gameStatus: 'start'
+  gameStatus: 'start',
+  correctCards: [],
+  pairWasChecked: true,
+  cardsAreDisable: false
 }
 
 const reducer = (state=initialState, action) => {
   switch (action.type) {
-    case 'SET_CARDS':
+    case 'GAME_FINISHED':
       return {
         ...state,
-        cards: action.newCards,
-        firstCard: null,
-        correctAnswersCounter: 0,
-        hideAll: false,
         gameStatus: action.gameStatus,
         isOver: true
       }
     case 'SET_FIRST_CARD':
       return {
-        ...state, firstCard: action.id
+        ...state, firstCard: action.id,
+        correctPair: null   
       }
     case 'SET_COUNTER':
       return {
         ...state, 
-        correctAnswersCounter: state.correctAnswersCounter + 1
-      }
-    case 'SET_COUNTER_TO_ZERO':
-      return {
-        ...state,
-        correctAnswersCounter: 0
+        correctCards: [...state.correctCards, action.id],
+        pairWasChecked: !state.pairWasChecked   
       }
     case 'HIDE_ALL':
       return {
@@ -43,8 +38,22 @@ const reducer = (state=initialState, action) => {
     case 'SET_NEW_GAME':
       return {
         ...state,
+        cards: shuffleImages(images),
+        firstCard: null,
+        hideAll: false,
         isOver: false,
-        hideAll: false
+        correctCards: []
+      }
+    case 'ERROR_HANDLER':
+      return {
+        ...state,
+        firstCard: null,
+        pairWasChecked: !state.pairWasChecked   
+      }
+    case 'DISABLE_ALL_CARDS':
+      return {
+        ...state,
+        cardsAreDisable: !state.cardsAreDisable
       }
     default:
       return state

@@ -1,4 +1,4 @@
-import { shuffleImages, images } from '../images'
+import { images } from '../images'
 
 
 const clickProcessing = (id) => {
@@ -8,29 +8,27 @@ const clickProcessing = (id) => {
     if (state.firstCard === null) {
       dispatch(setFirstCard(id))
     } else {
-      if (state.firstCard === id && (state.correctAnswersCounter === (images.length / 2) - 1)) {
-        dispatch(setCards('victory'))
+      if (state.firstCard === id && (state.correctCards.length === (images.length / 2) - 1)) {
+        dispatch(finishGame('victory'))
       } else if (state.firstCard === id) {
         dispatch(setFirstCard(null))
-        dispatch(setCounter())
+        dispatch(setCounter(id))
       } else {
-        dispatch(setCards('lose'))
+        dispatch(onErrorHandler())
       }
     }
   }
 }
 
-const hideAll = () => {
+const hideAllCards = () => {
   return {
     type: 'HIDE_ALL'
   }
 }
 
-const setCards = (gameStatus) => {
-  const newCards = shuffleImages(images)
+const finishGame = (gameStatus) => {
   return {
-    type: 'SET_CARDS',
-    newCards,
+    type: 'GAME_FINISHED',
     gameStatus
   }
 }
@@ -42,15 +40,10 @@ const setFirstCard = (id) => {
   }
 }
 
-const setCounter = () => {
+const setCounter = (id) => {
   return {
-    type: 'SET_COUNTER'
-  }
-}
-
-const setCounterToZero = () => {
-  return {
-    type: 'SET_COUNTER_TO_ZERO'
+    type: 'SET_COUNTER',
+    id
   }
 }
 
@@ -60,12 +53,21 @@ const setNewGame = () => {
   }
 }
 
+const onErrorHandler = () => {
+  return {
+    type: 'ERROR_HANDLER'
+  }
+}
+
+const disableAllCards = () => {
+  return {
+    type: 'DISABLE_ALL_CARDS'
+  }
+}
+
 export {
-  setCards,
-  setFirstCard,
-  setCounter,
-  setCounterToZero,
   clickProcessing,
-  hideAll,
-  setNewGame
+  hideAllCards,
+  setNewGame,
+  disableAllCards
 }
